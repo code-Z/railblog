@@ -4,11 +4,13 @@ class ArticlesController < ApplicationController
 
 	def index
 		@search = Article.search(params[:q])
+		@search.build_condition
 		if params[:tag]
 		  @articles = @search.result.tagged_with(params[:tag]).paginate(page: params[:page], per_page: 10)
 		else
 		  @articles = @search.result.paginate(page: params[:page], per_page: 10)
 		end
+
 	end
   
   def show

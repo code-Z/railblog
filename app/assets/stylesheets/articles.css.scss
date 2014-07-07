@@ -2,9 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #tag_cloud {
-  width: 400px;
+  width: 100%;
   line-height: 1.6em;
   .s { font-size: 0.6em; }
   .m { font-size: 1.0em; }
   .l { font-size: 1.4em; }
+}
+
+.article_title {
+	font-size: 1.4em;
 }

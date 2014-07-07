@@ -1,29 +1,30 @@
-<h1>List of Articles</h1>
-
-<div id="tag_cloud" style="background-color: #EEE; border-radius: 3px; width: 100%;">
+<div id="tag_cloud" style="float: left; background-color: #EEE; border-radius: 3px; width: 97%; margin-top:10px; margin-bottom:10px; padding:10px;" >
   <p>List of tags:</p>
 	<% tag_cloud Article.tag_counts, %w[s m l] do |tag, css_class| %>
-    <%= link_to tag.name, tag_path(tag.name) %>
+    <%= link_to tag.name, tag_path(tag.name) %>,
   <% end %>
+  ...
 </div>
 
+<div id="search_box" style="background-color: #EEE; border-radius: 3px; width: 97%; margin-top:10px; margin-bottom:10px; padding:10px;" >
+  <p>Search the article</p>
 <%= search_form_for @search do |f| %>
-  <div class="field">
-    <%= f.label :title_cont, "Title contains" %>
-    <%= f.text_field :title_cont %>
-  </div>
-  <div class="field">
-    <%= f.label :body_cont, "Body contains" %>
-    <%= f.text_field :body_cont %>
-  </div>
+  <%= f.condition_fields do |c| %>
+    <%= render "condition_fields", f: c %>
+  <% end %>
+  <p><%= link_to_add_fields "Add more search conditions", f, :condition %></p>
   <div class="actions"><%= f.submit %></div>
 <% end %>
 
+</div>
+
+<h1>List of Articles</h1>
+
 <br /><br />
 
-<ul id="articles">
+<ol class="list-group">
   <% @articles.each do |article| %>
-    <li>
+    <li class="list-group-item">
       <%= link_to article.title, article_path(article),
        class: 'article_title', id: "article_#{article.id}" %>
        <br />
@@ -36,4 +37,4 @@
   <% if logged_in? %>
   <%= link_to "Create a New Article", new_article_path, class: "new_article" %>
   <% end %>
-</ul>
+</ol>

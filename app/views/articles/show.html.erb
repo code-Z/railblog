@@ -2,7 +2,7 @@
 
 <p><%= image_tag @article.image.url %></p>
 
-<p><%= @article.body %></p><br /><br /><br />
+<p align="justify"><%= @article.body %></p><br /><br /><br />
 
 <% if logged_in? %>
 	<%= link_to "edit", edit_article_path(@article) %>

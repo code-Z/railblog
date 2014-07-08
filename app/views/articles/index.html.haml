@@ -1,0 +1,30 @@
+#tag_cloud{style: "float: left; background-color: #EEE; border-radius: 3px; width: 97%; margin-top:10px; margin-bottom:10px; padding:10px;"}
+  %p List of tags:
+  - tag_cloud Article.tag_counts, %w[s m l] do |tag, css_class|
+    = link_to tag.name, tag_path(tag.name)
+    ,
+  \...
+#search_box{style: "background-color: #EEE; border-radius: 3px; width: 97%; margin-top:10px; margin-bottom:10px; padding:10px;"}
+  %p Search the article
+  = search_form_for @search do |f|
+    = f.condition_fields do |c|
+      = render "condition_fields", f: c
+    %p= link_to_add_fields "Add more search conditions", f, :condition
+    .actions= f.submit
+%h1 List of Articles
+%br/
+%br/
+%ol.list-group
+  - @articles.each do |article|
+    %li.list-group-item
+      = link_to article.title, article_path(article),       |
+        class: 'article_title', id: "article_#{article.id}" |
+      %br/
+      %p
+        Tags: #{raw article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')}
+  %br/
+  %br/
+  = will_paginate @articles
+  %br/
+  - if logged_in?
+    = link_to "Create a New Article", new_article_path, class: "new_article"
